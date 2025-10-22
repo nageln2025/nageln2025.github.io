@@ -285,12 +285,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>2018</td><td>Abitur</td><td>Berlin</td><td>Schule</td></tr>
-              <tr><td>2019</td><td>Freiwilligendienst</td><td>Leipzig</td><td>Engagement</td></tr>
-              <tr><td>2020</td><td>Studienbeginn</td><td>Dresden</td><td>Geoinformatik</td></tr>
-              <tr><td>2022</td><td>Praktikum</td><td>Hamburg</td><td>GIS</td></tr>
-              <tr><td>2024</td><td>Auslandssemester</td><td>Stockholm</td><td>Erfahrung</td></tr>
-              <tr><td>2025</td><td>Abschlussarbeit</td><td>Dresden</td><td>Forschung</td></tr>
+              <tr><td>2022/2023</td><td>Minijob</td><td>Zweibrücken</td><td>Fashion Outlet</td></tr>
+              <tr><td>2023</td><td>Abitur</td><td>Pirmasens</td><td>Leibniz-Gymnasium</td></tr>
+              <tr><td>2023</td><td>Vorpraktikum</td><td>Landau in der Pfalz</td><td>8 Wochen</td></tr>
+              <tr><td>2023</td><td>Studienbeginn</td><td>Mainz</td><td>Geoinformatik</td></tr>
+              <tr><td>2026</td><td>Studiumsende</td><td>Mainz</td><td>Geoinformatik</td></tr>
             </tbody>
           </table>
         </section>
@@ -337,14 +336,7 @@
       <!-- News -->
       <div id="panel-news" class="tabpanel" role="tabpanel" tabindex="0" aria-labelledby="tab-news" hidden>
         <h2>News</h2>
-        <article style="max-width: 700px; margin: 0 auto;">
-          <h3 style="margin-top:0">Aktuelle Meldungen</h3>
-          <p>Kurze Infos zu aktuellen Ereignissen, Veröffentlichungen oder Veranstaltungen.</p>
-          <ul>
-            <li><strong>Okt 2025:</strong> Poster-Beitrag zu Web-GIS eingereicht.</li>
-            <li><strong>Sept 2025:</strong> Neue interaktive Karte zur nachhaltigen Mobilität online.</li>
-          </ul>
-        </article>
+        <div id="news-list" style="max-width: 700px; margin: 0 auto;"></div>
       </div>
 
       <!-- Projects -->
@@ -463,7 +455,7 @@
         if (panel) panel.focus();
       }
 
-      // init
+      // init (tabs init code)
       tabs.forEach((t, idx) => {
         const selected = t.getAttribute('aria-selected') === 'true';
         t.tabIndex = selected ? 0 : -1;
@@ -480,6 +472,59 @@
           if (newIndex !== null) { e.preventDefault(); tabs[newIndex].focus(); activateTab(tabs[newIndex]); }
         });
       });
+
+      // Load news from local JSON (same folder: ./news.json)
+      async function loadNews() {
+        const container = document.getElementById('news-list');
+        if (!container) return;
+        try {
+          const res = await fetch('./news.json');
+          if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+          const data = await res.json();
+          container.innerHTML = '';
+          if (!Array.isArray(data) || data.length === 0) {
+            container.innerHTML = '<p>Keine News vorhanden.</p>';
+            return;
+          }
+          data.forEach(item => {
+            const article = document.createElement('article');
+            article.style.marginBottom = '1rem';
+
+            const time = document.createElement('time');
+            if (item.date) {
+              time.dateTime = item.date;
+              time.textContent = new Date(item.date).toLocaleDateString('de-DE', { year:'numeric', month:'short', day:'numeric' });
+            }
+            article.appendChild(time);
+
+            const h3 = document.createElement('h3');
+            h3.style.margin = '.2rem 0 .4rem 0';
+            h3.textContent = item.title || '';
+            article.appendChild(h3);
+
+            const p = document.createElement('p');
+            p.style.margin = '0 0 .6rem 0';
+            p.textContent = item.summary || '';
+            article.appendChild(p);
+
+            if (item.link) {
+              const a = document.createElement('a');
+              a.href = item.link;
+              a.target = '_blank';
+              a.rel = 'noopener';
+              a.textContent = 'Mehr';
+              article.appendChild(a);
+            }
+            container.appendChild(article);
+          });
+        } catch (err) {
+          console.error('Fehler beim Laden der News:', err);
+          container.innerHTML = '<p>Fehler beim Laden der News.</p>';
+        }
+      }
+
+      // News beim Start laden
+      loadNews();
     })();
   </script>
 </body>
