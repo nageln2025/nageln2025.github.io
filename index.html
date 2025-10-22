@@ -184,6 +184,34 @@
       box-shadow: var(--shadow);
     }
 
+    /* News: zwei-spaltiges, responsives Grid */
+    #news-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    @media (min-width: 720px) {
+      #news-list { grid-template-columns: repeat(2, 1fr); }
+    }
+    #news-list article {
+      background: var(--bg); /* oder var(--card-bg) falls gewünscht */
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    #news-list article img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      margin: 0;
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: 1fr;
@@ -488,14 +516,35 @@
           }
           data.forEach(item => {
             const article = document.createElement('article');
-            article.style.marginBottom = '1rem';
+            article.style.marginBottom = '1.2rem';
 
-            const time = document.createElement('time');
-            if (item.date) {
-              time.dateTime = item.date;
-              time.textContent = new Date(item.date).toLocaleDateString('de-DE', { year:'numeric', month:'short', day:'numeric' });
+            // optionales Bild
+            if (item.image) {
+              const img = document.createElement('img');
+              img.src = item.image;
+              img.alt = item.title || 'News Bild';
+              img.style.maxWidth = '100%';
+              img.style.height = 'auto';
+              img.style.borderRadius = '8px';
+              img.style.display = 'block';
+              img.style.marginBottom = '0.6rem';
+              // bei lokalen Bildern Pfad prüfen (z.B. './images/…')
+              article.appendChild(img);
             }
-            article.appendChild(time);
+
+            const meta = document.createElement('div');
+            meta.style.marginBottom = '0.2rem';
+            if (item.date) {
+              const time = document.createElement('time');
+              time.dateTime = item.date;
+              try {
+                time.textContent = new Date(item.date).toLocaleDateString('de-DE', { year:'numeric', month:'short', day:'numeric' });
+              } catch (e) {
+                time.textContent = item.date;
+              }
+              meta.appendChild(time);
+            }
+            article.appendChild(meta);
 
             const h3 = document.createElement('h3');
             h3.style.margin = '.2rem 0 .4rem 0';
@@ -522,7 +571,7 @@
           container.innerHTML = '<p>Fehler beim Laden der News.</p>';
         }
       }
-
+      
       // News beim Start laden
       loadNews();
     })();
