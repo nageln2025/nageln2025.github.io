@@ -11,18 +11,39 @@
       --accent: rgb(181, 32, 67);
       --card-bg: #f5f5f5;
       --border: #ddd;
-      --shadow: 0 4px 16px rgba(32,181,129,0.12);
+      --shadow: 0 4px 16px rgba(181,32,67,0.12);
     }
+
+    /* System-Dunkelmodus, nur wenn keine manuelle Auswahl gesetzt ist */
     @media (prefers-color-scheme: dark) {
-      :root {
+      html:not([data-theme]) {
         --bg: #181818;
         --fg: #f5f5f5;
-        --accent: #ff4c7d;
+        --accent: rgb(181, 32, 67);
         --card-bg: #232323;
         --border: #444;
-        --shadow: 0 4px 16px rgba(255,76,125,0.10);
+        --shadow: 0 4px 16px rgba(181,32,67,0.12);
       }
     }
+
+    /* Manuelle Theme-Override */
+    html[data-theme="dark"] {
+      --bg: #181818;
+      --fg: #f5f5f5;
+      --accent: rgb(181, 32, 67);
+      --card-bg: #232323;
+      --border: #444;
+      --shadow: 0 4px 16px rgba(181,32,67,0.12);
+    }
+    html[data-theme="light"] {
+      --bg: #fff;
+      --fg: #222;
+      --accent: rgb(181, 32, 67);
+      --card-bg: #f5f5f5;
+      --border: #ddd;
+      --shadow: 0 4px 16px rgba(181,32,67,0.12);
+    }
+
     html {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--bg);
@@ -30,10 +51,8 @@
       line-height: 1.8;
       letter-spacing: 0.01em;
     }
-    body {
-      margin: 0;
-      padding: 0;
-    }
+    body { margin: 0; padding: 0; }
+
     header {
       background: var(--accent);
       color: #fff;
@@ -41,15 +60,36 @@
       text-align: center;
       border-bottom-left-radius: 18px;
       border-bottom-right-radius: 18px;
+      position: relative; /* für Toggle-Button */
     }
+    /* Theme-Toggle-Button */
+    #theme-toggle {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #theme-toggle:focus {
+      outline: 2px solid rgba(255,255,255,0.35);
+      outline-offset: 2px;
+    }
+
     header h1 {
       margin: 0 0 0.7rem 0;
       font-size: 2.3rem;
       letter-spacing: 0.03em;
     }
-    h2 {
-      text-align: center;
-    }
+    h2 { text-align: center; }
+
     main {
       max-width: 800px;
       margin: 2.5rem auto;
@@ -58,18 +98,13 @@
       flex-direction: column;
       gap: 2.5rem;
     }
-    section {
-      margin-bottom: 1.5rem;
-    }
-    figure {
-      margin: 0;
-      text-align: center;
-    }
+    section { margin-bottom: 1.5rem; }
+    figure { margin: 0; text-align: center; }
     figure img {
       width: 320px;
       height: 220px;
       object-fit: cover;
-      border-radius: 16px; /* leicht abgerundete Ecken */
+      border-radius: 16px;
       border: 4px solid var(--accent);
       box-shadow: var(--shadow);
       display: block;
@@ -81,6 +116,7 @@
       color: var(--accent);
       letter-spacing: 0.02em;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -103,22 +139,60 @@
       font-weight: 600;
       letter-spacing: 0.02em;
     }
-    tr:last-child td {
-      border-bottom: none;
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: rgba(181,32,67,0.06); }
+
+    /* Tabs */
+    .tablist {
+      display: flex;
+      gap: 12px; /* etwas mehr Abstand zwischen Tabs */
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 0 0 1.2rem 0;
     }
-    tbody tr:hover {
-      background: #eafaf5;
+    .tab {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--fg);
+      padding: 0.65rem 1.1rem; /* größere Klickfläche */
+      border-radius: 12px;     /* leicht abgerundet */
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.05rem;      /* größere Schrift */
+      min-width: 110px;        /* gleiche Breite für Konsistenz */
+      text-align: center;
     }
+    .tab[aria-selected="true"] {
+      background: var(--accent);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(181,32,67,0.12); /* stärkerer Schatten */
+      transform: translateY(-2px);
+    }
+    .tab:focus {
+      outline: 3px solid rgba(181,32,67,0.18);
+      outline-offset: 3px;
+    }
+
+    .tabpanel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
     @media (min-width: 721px) {
-      .gallery {
-        grid-template-columns: repeat(3, 1fr);
-      }
+      .gallery { grid-template-columns: repeat(3, 1fr); }
     }
+
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -130,7 +204,7 @@
       transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
     }
     .card:hover {
-      box-shadow: 0 8px 32px rgba(32,181,129,0.18);
+      box-shadow: 0 8px 32px rgba(181,32,67,0.18);
       border-color: var(--accent);
       transform: translateY(-2px) scale(1.02);
     }
@@ -149,6 +223,8 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 0.5rem;
+      align-items: center;
+      text-align: center;
     }
     .card-title {
       font-size: 1.13rem;
@@ -157,131 +233,254 @@
       color: var(--accent);
       letter-spacing: 0.02em;
     }
-    .card-text {
-      font-size: 1rem;
-      color: var(--fg);
-      margin-bottom: 0.5rem;
-    }
-    .card-link {
-      margin-top: auto;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-      transition: text-decoration 0.2s;
-      font-size: 0.98rem;
-    }
-    .card-link:hover {
-      text-decoration: underline;
-    }
+    .card-text { font-size: 1rem; color: var(--fg); margin-bottom: 0.5rem; }
+    .card-link { margin-top: auto; color: var(--accent); text-decoration: none; font-weight: 500; transition: text-decoration 0.2s; font-size: 0.98rem; }
+    .card-link:hover { text-decoration: none; } /* keine Unterstreichung */
+
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px}
   </style>
 </head>
 <body>
   <header>
     <h1>Nina Nagel</h1>
     <p>Willkommen auf meiner persönlichen Startseite. Hier findest du einen kurzen Überblick über meinen Werdegang und aktuelle Projekte.</p>
+
+    <!-- Theme-Umschalter -->
+    <button id="theme-toggle" aria-pressed="false" aria-label="Dunkelmodus umschalten">🌙 <span class="visually-hidden">Dunkelmodus</span></button>
   </header>
+
   <main>
-    <section>
-      <h2>Mein Bild</h2>
-      <figure style="margin-bottom: 1.5rem;">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Meer">
-        <figcaption>Lieblingsreiseziel: Strand</figcaption>
-      </figure>
-    </section>
-    <section>
-      <h2>Über mich</h2>
-      <div style="max-width: 600px; margin: 0 auto 1.5rem auto;">
-        <p style="text-align: center; margin: 0;">
-          Ich studiere Geoinformatik und interessiere mich für digitale Karten, Datenanalyse und nachhaltige Stadtentwicklung. Auf dieser Seite findest du eine Übersicht meiner bisherigen Stationen und einige Projekte, die mich begeistern.
-        </p>
+    <div role="region" aria-label="Hauptbereiche">
+      <div class="tablist" role="tablist" aria-label="Sektionen">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="panel-about" id="tab-about">About</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-news" id="tab-news">News</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-projects" id="tab-projects">Projects</button>
       </div>
-    </section>
-    <section>
-      <h2>Stationen</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Jahr</th>
-            <th>Station</th>
-            <th>Ort</th>
-            <th>Stichwort</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2018</td>
-            <td>Abitur</td>
-            <td>Berlin</td>
-            <td>Schule</td>
-          </tr>
-          <tr>
-            <td>2019</td>
-            <td>Freiwilligendienst</td>
-            <td>Leipzig</td>
-            <td>Engagement</td>
-          </tr>
-          <tr>
-            <td>2020</td>
-            <td>Studienbeginn</td>
-            <td>Dresden</td>
-            <td>Geoinformatik</td>
-          </tr>
-          <tr>
-            <td>2022</td>
-            <td>Praktikum</td>
-            <td>Hamburg</td>
-            <td>GIS</td>
-          </tr>
-          <tr>
-            <td>2024</td>
-            <td>Auslandssemester</td>
-            <td>Stockholm</td>
-            <td>Erfahrung</td>
-          </tr>
-          <tr>
-            <td>2025</td>
-            <td>Abschlussarbeit</td>
-            <td>Dresden</td>
-            <td>Forschung</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+
+      <!-- About -->
+      <div id="panel-about" class="tabpanel" role="tabpanel" tabindex="0" aria-labelledby="tab-about">
         <section>
-  <h2>Galerie</h2>
-  <div class="gallery">
-    <div class="card">
-      <a href="https://github.com/nageln2025" target="_blank" rel="noopener" aria-label="GitHub Profil">
-        <img src="https://picsum.photos/600/400?random=1" alt="GitHub Platzhalterbild">
-      </a>
-      <div class="card-content">
-        <div class="card-title">GitHub</div>
-        <div class="card-text">Meine Programmierprojekte und Code-Sammlungen auf GitHub.</div>
-        <span class="card-link">Profil ansehen</span>
+          <h2>Mein Bild</h2>
+          <figure style="margin-bottom: 1rem;">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=60" alt="Meer">
+            <figcaption>Lieblingsreiseziel: Strand</figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h2>Über mich</h2>
+          <div style="max-width: 600px; margin: 0 auto 1rem auto;">
+            <p style="text-align: center; margin: 0;">
+              Ich studiere Geoinformatik und interessiere mich für digitale Karten, Datenanalyse und nachhaltige Stadtentwicklung. Auf dieser Seite findest du eine Übersicht meiner bisherigen Stationen und einige Projekte, die mich begeistern.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Stationen</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Jahr</th><th>Station</th><th>Ort</th><th>Stichwort</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>2018</td><td>Abitur</td><td>Berlin</td><td>Schule</td></tr>
+              <tr><td>2019</td><td>Freiwilligendienst</td><td>Leipzig</td><td>Engagement</td></tr>
+              <tr><td>2020</td><td>Studienbeginn</td><td>Dresden</td><td>Geoinformatik</td></tr>
+              <tr><td>2022</td><td>Praktikum</td><td>Hamburg</td><td>GIS</td></tr>
+              <tr><td>2024</td><td>Auslandssemester</td><td>Stockholm</td><td>Erfahrung</td></tr>
+              <tr><td>2025</td><td>Abschlussarbeit</td><td>Dresden</td><td>Forschung</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>Galerie</h2>
+          <div class="gallery">
+            <div class="card">
+              <a href="https://github.com/nageln2025" target="_blank" rel="noopener" aria-label="GitHub Profil">
+                <img src="https://picsum.photos/600/400?random=1" alt="GitHub Platzhalterbild">
+              </a>
+              <div class="card-content">
+                <div class="card-title">GitHub</div>
+                <div class="card-text">Meine Programmierprojekte und Code-Sammlungen auf GitHub.</div>
+                <span class="card-link">Profil ansehen</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <a href="https://portfolio.nina-nagel.de/" target="_blank" rel="noopener" aria-label="Portfolio Website">
+                <img src="https://picsum.photos/600/400?random=2" alt="Portfolio Platzhalterbild">
+              </a>
+              <div class="card-content">
+                <div class="card-title">Portfolio</div>
+                <div class="card-text">Eine Auswahl meiner Arbeiten und Projekte aus Studium und Freizeit.</div>
+                <span class="card-link">Portfolio öffnen</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <a href="https://fotoblog.nina-nagel.de/" target="_blank" rel="noopener" aria-label="Fotoblog">
+                <img src="https://picsum.photos/600/400?random=3" alt="Fotoblog Platzhalterbild">
+              </a>
+              <div class="card-content">
+                <div class="card-title">Fotoblog</div>
+                <div class="card-text">Mein Fotoblog mit Bildern aus Reisen und Alltag.</div>
+                <span class="card-link">Fotoblog besuchen</span>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    </div>
-    <div class="card">
-      <a href="https://portfolio.nina-nagel.de/" target="_blank" rel="noopener" aria-label="Portfolio Website">
-        <img src="https://picsum.photos/600/400?random=2" alt="Portfolio Platzhalterbild">
-      </a>
-      <div class="card-content">
-        <div class="card-title">Portfolio</div>
-        <div class="card-text">Eine Auswahl meiner Arbeiten und Projekte aus Studium und Freizeit.</div>
-        <span class="card-link">Portfolio öffnen</span>
+
+      <!-- News -->
+      <div id="panel-news" class="tabpanel" role="tabpanel" tabindex="0" aria-labelledby="tab-news" hidden>
+        <h2>News</h2>
+        <article style="max-width: 700px; margin: 0 auto;">
+          <h3 style="margin-top:0">Aktuelle Meldungen</h3>
+          <p>Kurze Infos zu aktuellen Ereignissen, Veröffentlichungen oder Veranstaltungen.</p>
+          <ul>
+            <li><strong>Okt 2025:</strong> Poster-Beitrag zu Web-GIS eingereicht.</li>
+            <li><strong>Sept 2025:</strong> Neue interaktive Karte zur nachhaltigen Mobilität online.</li>
+          </ul>
+        </article>
       </div>
-    </div>
-    <div class="card">
-      <a href="https://fotoblog.nina-nagel.de/" target="_blank" rel="noopener" aria-label="Fotoblog">
-        <img src="https://picsum.photos/600/400?random=3" alt="Fotoblog Platzhalterbild">
-      </a>
-      <div class="card-content">
-        <div class="card-title">Fotoblog</div>
-        <div class="card-text">Mein Fotoblog mit Bildern aus Reisen und Alltag.</div>
-        <span class="card-link">Fotoblog besuchen</span>
+
+      <!-- Projects -->
+      <div id="panel-projects" class="tabpanel" role="tabpanel" tabindex="0" aria-labelledby="tab-projects" hidden>
+        <h2>Projects</h2>
+        <p style="text-align:center; max-width:700px; margin:0 auto 1rem;">Präsentation eigener Web-Maps und Webseiten. Klick auf ein Bild öffnet das Projekt.</p>
+        <div class="gallery">
+          <div class="card">
+            <a href="https://github.com/nageln2025" target="_blank" rel="noopener" aria-label="Web-Mapping Sammlung">
+              <img src="https://picsum.photos/600/400?random=4" alt="Projektbild 1">
+            </a>
+            <div class="card-content">
+              <div class="card-title">Web-Mapping Sammlung</div>
+              <div class="card-text">Sammlung von Web-Maps und Codebeispielen.</div>
+              <div class="card-link">Bild anklicken</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <a href="https://portfolio.nina-nagel.de/" target="_blank" rel="noopener" aria-label="Interaktive Karte">
+              <img src="https://picsum.photos/600/400?random=5" alt="Projektbild 2">
+            </a>
+            <div class="card-content">
+              <div class="card-title">Interaktive Karte</div>
+              <div class="card-text">Projekt: Karte zur nachhaltigen Stadtplanung.</div>
+              <div class="card-link">Bild anklicken</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <a href="https://fotoblog.nina-nagel.de/" target="_blank" rel="noopener" aria-label="Fotoblog Projekt">
+              <img src="https://picsum.photos/600/400?random=6" alt="Projektbild 3">
+            </a>
+            <div class="card-content">
+              <div class="card-title">Fotoblog / Visualisierungen</div>
+              <div class="card-text">Visuelle Dokumentation von Feldarbeit und Reisen.</div>
+              <div class="card-link">Bild anklicken</div>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
-  </div>
-</section>
   </main>
+
+  <script>
+    (function () {
+      /* Theme toggle (bestehende Logik) */
+      const btn = document.getElementById('theme-toggle');
+      const root = document.documentElement;
+      const storageKey = 'theme'; // 'light' | 'dark' | null
+
+      function applyTheme(theme) {
+        if (theme === 'dark' || theme === 'light') {
+          root.setAttribute('data-theme', theme);
+        } else {
+          root.removeAttribute('data-theme');
+        }
+        updateButton();
+      }
+      function currentTheme() { return root.getAttribute('data-theme'); }
+      function updateButton() {
+        const theme = currentTheme();
+        if (theme === 'dark') {
+          btn.textContent = '☀️';
+          btn.setAttribute('aria-pressed', 'true');
+          btn.setAttribute('aria-label', 'Hellmodus aktiv, umschalten');
+        } else if (theme === 'light') {
+          btn.textContent = '🌙';
+          btn.setAttribute('aria-pressed', 'false');
+          btn.setAttribute('aria-label', 'Dunkelmodus aktiv, umschalten');
+        } else {
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          btn.textContent = prefersDark ? '☀️' : '🌙';
+          btn.setAttribute('aria-pressed', prefersDark ? 'true' : 'false');
+          btn.setAttribute('aria-label', 'Dunkelmodus umschalten');
+        }
+      }
+
+      const saved = localStorage.getItem(storageKey);
+      if (saved === 'dark' || saved === 'light') applyTheme(saved); else applyTheme(null);
+
+      btn.addEventListener('click', function () {
+        const themeNow = currentTheme();
+        let next;
+        if (themeNow === 'dark') next = 'light';
+        else if (themeNow === 'light') next = null;
+        else {
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          next = prefersDark ? 'light' : 'dark';
+        }
+        if (next === null) localStorage.removeItem(storageKey); else localStorage.setItem(storageKey, next);
+        applyTheme(next);
+      });
+
+      if (window.matchMedia) {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        const listener = () => { if (!localStorage.getItem(storageKey)) applyTheme(null); };
+        mq.addEventListener ? mq.addEventListener('change', listener) : mq.addListener(listener);
+      }
+
+      /* Tabs: click + keyboard support */
+      const tabs = Array.from(document.querySelectorAll('.tab'));
+      function activateTab(tab) {
+        tabs.forEach(t => {
+          const selected = t === tab;
+          t.setAttribute('aria-selected', selected ? 'true' : 'false');
+          t.tabIndex = selected ? 0 : -1;
+          const panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) {
+            if (selected) panel.removeAttribute('hidden');
+            else panel.setAttribute('hidden', '');
+          }
+        });
+        const panel = document.getElementById(tab.getAttribute('aria-controls'));
+        if (panel) panel.focus();
+      }
+
+      // init
+      tabs.forEach((t, idx) => {
+        const selected = t.getAttribute('aria-selected') === 'true';
+        t.tabIndex = selected ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel && !selected) panel.setAttribute('hidden', '');
+        t.addEventListener('click', () => activateTab(t));
+        t.addEventListener('keydown', (e) => {
+          const key = e.key;
+          let newIndex = null;
+          if (key === 'ArrowRight') newIndex = (idx + 1) % tabs.length;
+          else if (key === 'ArrowLeft') newIndex = (idx - 1 + tabs.length) % tabs.length;
+          else if (key === 'Home') newIndex = 0;
+          else if (key === 'End') newIndex = tabs.length - 1;
+          if (newIndex !== null) { e.preventDefault(); tabs[newIndex].focus(); activateTab(tabs[newIndex]); }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
