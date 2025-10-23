@@ -291,21 +291,36 @@
   z-index: 100;
 }
 
-.contact-icons a img {
-  width: 32px;
-  height: 32px;
-  filter: invert(15%) sepia(10%) saturate(200%) hue-rotate(320deg) brightness(90%);
-  transition: transform 0.2s, filter 0.2s;
+/* use embedded SVGs or simple-icons SVGs; style via currentColor */
+.contact-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--fg);
+  text-decoration: none;
+  transition: transform .12s ease, background .12s ease, color .12s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.contact-icons a:hover { transform: scale(1.07); background: rgba(0,0,0,0.04); }
+
+/* target SVGs inside links */
+.contact-icons a svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  fill: currentColor;
 }
 
-html[data-theme="dark"] .contact-icons a img {
-  filter: invert(90%) sepia(5%) saturate(200%) hue-rotate(320deg) brightness(110%);
+/* dark mode: make icons light */
+html[data-theme="dark"] .contact-icons a {
+  color: #fff;
+  background: rgba(255,255,255,0.04);
 }
-
-.contact-icons a:hover img {
-  transform: scale(1.15);
-  filter: brightness(1.2);
-}
+html[data-theme="dark"] .contact-icons a:hover { background: rgba(255,255,255,0.06); }
 /* --- Farbsteuerung für Sonne und Mond im Theme-Toggle --- */
 #theme-toggle {
   font-size: 1.4rem;
@@ -635,19 +650,30 @@ html[data-theme="dark"] #theme-toggle {
   </script>
     <!-- Kontaktbereich unten rechts -->
   <div class="contact-icons">
-  <a href="https://www.linkedin.com/in/dein-profil" target="_blank" rel="noopener" aria-label="LinkedIn">
-    <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/linkedin.svg" alt="LinkedIn">
-  </a>
+    <a href="https://www.linkedin.com/in/dein-profil" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <!-- LinkedIn (simple, accessible SVG) -->
+      <svg role="img" aria-hidden="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <title>LinkedIn</title>
+        <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.25h5V24H0V8.25zM8.5 8.25h4.78v2.07h.07c.66-1.25 2.27-2.56 4.67-2.56 4.99 0 5.91 3.28 5.91 7.55V24h-5V16.5c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.92V24h-5V8.25z"/>
+      </svg>
+    </a>
 
-  <a href="https://github.com/nageln2025" target="_blank" rel="noopener" aria-label="GitHub">
-    <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/github.svg" alt="GitHub">
-  </a>
+    <a href="https://github.com/nageln2025" target="_blank" rel="noopener" aria-label="GitHub">
+      <!-- GitHub (simple mark) -->
+      <svg role="img" aria-hidden="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <title>GitHub</title>
+        <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.27-1.7-1.27-1.7-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.67 1.25 3.32.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18.91-.25 1.88-.38 2.85-.39.97.01 1.94.14 2.85.39 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .31.21.68.8.56A10.52 10.52 0 0023.5 12C23.5 5.73 18.27.5 12 .5z"/>
+      </svg>
+    </a>
 
-  <a href="mailto:nina.nagel@hs-mainz.de" aria-label="E-Mail">
-    <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/maildotru.svg" alt="E-Mail">
-  </a>
-</div>
-
+    <a href="mailto:nina.nagel@hs-mainz.de" aria-label="E-Mail">
+      <!-- E-Mail (simple envelope SVG) -->
+      <svg role="img" aria-hidden="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <title>E-Mail</title>
+        <path d="M2 6.5A2.5 2.5 0 014.5 4h15A2.5 2.5 0 0122 6.5v11A2.5 2.5 0 0119.5 20h-15A2.5 2.5 0 012 18.5v-12zM4.5 6L12 11l7.5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
 
 </body>
 </html>
