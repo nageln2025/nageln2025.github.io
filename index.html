@@ -291,50 +291,56 @@
   z-index: 100;
 }
 
-/* use embedded SVGs or simple-icons SVGs; style via currentColor */
+/* Icon-Buttons: Farben über currentColor / CSS-Variablen steuern */
 .contact-icons a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: transparent;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.04);   /* hellmodus default */
   color: var(--fg);
   text-decoration: none;
-  transition: transform .12s ease, background .12s ease, color .12s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform .12s ease, background .12s ease, color .12s ease, box-shadow .12s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
 }
-.contact-icons a:hover { transform: scale(1.07); background: rgba(0,0,0,0.04); }
+.contact-icons a:hover {
+  transform: scale(1.06);
+  background: rgba(0,0,0,0.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
 
-/* target SVGs inside links */
+/* SVGs übernehmen currentColor */
 .contact-icons a svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   display: block;
   fill: currentColor;
+  stroke: currentColor;
 }
 
-/* dark mode: make icons light */
+/* Dunkelmodus: helle Icons auf dunklem Hintergrund */
 html[data-theme="dark"] .contact-icons a {
-  color: #fff;
   background: rgba(255,255,255,0.04);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.24);
+  border: 1px solid rgba(255,255,255,0.06);
 }
-html[data-theme="dark"] .contact-icons a:hover { background: rgba(255,255,255,0.06); }
-/* --- Farbsteuerung für Sonne und Mond im Theme-Toggle --- */
-#theme-toggle {
-  font-size: 1.4rem;
-  color: #000; /* schwarz im Lightmode */
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 8px;
-  padding: 6px 10px;
-  cursor: pointer;
-  transition: color 0.3s ease;
+html[data-theme="dark"] .contact-icons a:hover {
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.36);
 }
 
-html[data-theme="dark"] #theme-toggle {
-  color: #fff; /* weiß im Darkmode */
+/* Optional: explizit für manuell gesetztes Light-Theme */
+html[data-theme="light"] .contact-icons a {
+  background: rgba(0,0,0,0.04);
+  color: var(--fg);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+html[data-theme="light"] .contact-icons a:hover {
+  background: rgba(0,0,0,0.06);
 }
 
 
