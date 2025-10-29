@@ -1,5 +1,4 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html>
       <head>
         <meta charset="UTF-8"/>
@@ -15,7 +14,7 @@
         <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css" rel="stylesheet">
         <link href="https://unpkg.com/maplibre-gl@^3/dist/maplibre-gl.css" rel="stylesheet">
 
-        
+        <!-— facebook open graph tags -->
         <meta property="og:url" content="http://kepler.gl/" />
         <meta property="og:title" content="Large-scale WebGL-powered Geospatial Data Visualization Tool" />
         <meta property="og:description" content="Kepler.gl is a powerful web-based geospatial data analysis tool. Built on a high performance rendering engine and designed for large-scale data sets." />
@@ -25,7 +24,7 @@
         <meta property="og:image:width" content="800" />
         <meta property="og:image:height" content="800" />
 
-       
+        <!-— twitter card tags -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:site" content="@openjsf">
         <meta name="twitter:creator" content="@openjsf">
@@ -95,7 +94,7 @@
               // mount keplerGl reducer
               keplerGl: keplerGl.keplerGlReducer.initialState({
                 uiState: {
-                  readOnly: true,
+                  readOnly: false,
                   currentModal: null
                 }
               })
@@ -177,8 +176,8 @@
               }, []);
               return react.createElement(
                 'div',
-                {style: {position: 'absolute', left: 0, width: '100vw', height: '100vh'}},
-                LogoSvg(),
+                {style: {position: 'absolute', left: 0, top: 0, width: '100%', height: '100%'}},
+                
                 react.createElement(keplerGl.KeplerGl, {
                   mapboxApiAccessToken: mapboxToken,
                   id: "map",
@@ -214,7 +213,7 @@
            */
           (function customize(keplerGl, store) {
             const datasets = [];
-            const config = {"version":"v1","config":{"visState":{"filters":[],"layers":[],"effects":[],"interactionConfig":{"tooltip":{"fieldsToShow":{},"compareMode":false,"compareType":"absolute","enabled":true},"brush":{"size":0.5,"enabled":false},"geocoder":{"enabled":false},"coordinate":{"enabled":false}},"layerBlending":"normal","overlayBlending":"normal","splitMaps":[],"animationConfig":{"currentTime":null,"speed":1},"editor":{"features":[],"visible":true}},"mapState":{"bearing":0,"dragRotate":false,"latitude":50.43905210451576,"longitude":7.460155296052438,"pitch":0,"zoom":3.421840751001908,"isSplit":false,"isViewportSynced":true,"isZoomLocked":false,"splitMapViewports":[]},"mapStyle":{"styleType":"dark-matter","topLayerGroups":{},"visibleLayerGroups":{"label":true,"road":true,"border":true,"building":true,"water":true,"land":true,"3d building":false},"threeDBuildingColor":[15.035172933000911,15.035172933000911,15.035172933000911],"backgroundColor":[0,0,0],"mapStyles":{}},"uiState":{"mapControls":{"mapLegend":{"active":false}}}}};
+            const config = {"version":"v1","config":{"visState":{"filters":[],"layers":[],"effects":[],"interactionConfig":{"tooltip":{"fieldsToShow":{},"compareMode":false,"compareType":"absolute","enabled":true},"brush":{"size":0.5,"enabled":false},"geocoder":{"enabled":false},"coordinate":{"enabled":false}},"layerBlending":"normal","overlayBlending":"normal","splitMaps":[],"animationConfig":{"currentTime":null,"speed":1},"editor":{"features":[],"visible":true}},"mapState":{"bearing":0,"dragRotate":false,"latitude":49.27846777616008,"longitude":6.17124165827385,"pitch":0,"zoom":3.821477142682579,"isSplit":false,"isViewportSynced":true,"isZoomLocked":false,"splitMapViewports":[]},"mapStyle":{"styleType":"dark-matter","topLayerGroups":{},"visibleLayerGroups":{"label":true,"road":true,"border":true,"building":true,"water":true,"land":true,"3d building":false},"threeDBuildingColor":[15.035172933000911,15.035172933000911,15.035172933000911],"backgroundColor":[0,0,0],"mapStyles":{}},"uiState":{"mapControls":{"mapLegend":{"active":false}}}}};
 
             const loadedData = keplerGl.KeplerGlSchema.load(
               datasets,
@@ -237,4 +236,3 @@
         </script>
       </body>
     </html>
-  
