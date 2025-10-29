@@ -226,6 +226,23 @@
       margin: 0;
     }
 
+    /* Project iframe embed (responsive 16:9) */
+    .project-embed {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 ratio */
+      margin-bottom: 1rem;
+    }
+    .project-embed iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: 1fr;
@@ -448,40 +465,76 @@ html[data-theme="light"] .contact-icons a:hover {
       <!-- Projects -->
       <div id="panel-projects" class="tabpanel" role="tabpanel" tabindex="0" aria-labelledby="tab-projects" hidden>
         <h2>Projects</h2>
-        <p style="text-align:center; max-width:700px; margin:0 auto 1rem;">Präsentation eigener Web-Maps und Webseiten. Ein Klick aufs Bild Öffnet das Projekt.</p>
-        <div class="gallery">
-          <div class="card">
-            <a href="https://github.com/nageln2025" target="_blank" rel="noopener" aria-label="Web-Mapping Sammlung">
-              <img src="https://picsum.photos/600/400?random=4" alt="Projektbild 1">
-            </a>
-            <div class="card-content">
-              <div class="card-title">Web-Mapping Sammlung</div>
-              <div class="card-text">Sammlung von Web-Maps und Codebeispielen.</div>
-              <div class="card-link">Bild anklicken</div>
+        <p style="text-align:center; max-width:700px; margin:0 auto 1rem;">Präsentation eigener Web-Maps und Webseiten — eingebettete GitHub-Pages:</p>
+
+        <!-- responsive grid für mehrere Embeds -->
+        <div class="project-grid" style="display:grid; gap:1rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+
+          <div class="project-card">
+            <h3 style="margin:.4rem 0 .6rem 0;text-align:center;">map_1_basiskarte</h3>
+            <div class="project-embed" aria-hidden="false">
+              <iframe src="https://nageln2025.github.io/Uebung3/maps/map_1_basiskarte.html"
+                      title="map_1_basiskarte"
+                      loading="lazy"
+                      allowfullscreen
+                      sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
+              </iframe>
             </div>
+            <p style="text-align:center;margin:.5rem 0 0;"><a href="https://nageln2025.github.io/Uebung3/maps/map_1_basiskarte.html" target="_blank" rel="noopener">Öffnen</a></p>
           </div>
 
-          <div class="card">
-            <a href="https://portfolio.nina-nagel.de/" target="_blank" rel="noopener" aria-label="Interaktive Karte">
-              <img src="https://picsum.photos/600/400?random=5" alt="Projektbild 2">
-            </a>
-            <div class="card-content">
-              <div class="card-title">Interaktive Karte</div>
-              <div class="card-text">Projekt: Karte zur nachhaltigen Stadtplanung.</div>
-              <div class="card-link">Bild anklicken</div>
+          <div class="project-card">
+            <h3 style="margin:.4rem 0 .6rem 0;text-align:center;">map_2_punkte</h3>
+            <div class="project-embed" aria-hidden="false">
+              <iframe src="https://nageln2025.github.io/Uebung3/maps/map_2_punkte.html"
+                      title="map_2_punkte"
+                      loading="lazy"
+                      allowfullscreen
+                      sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
+              </iframe>
             </div>
+            <p style="text-align:center;margin:.5rem 0 0;"><a href="https://nageln2025.github.io/Uebung3/maps/map_2_punkte.html" target="_blank" rel="noopener">Öffnen</a></p>
           </div>
 
-          <div class="card">
-            <a href="https://fotoblog.nina-nagel.de/" target="_blank" rel="noopener" aria-label="Fotoblog Projekt">
-              <img src="https://picsum.photos/600/400?random=6" alt="Projektbild 3">
-            </a>
-            <div class="card-content">
-              <div class="card-title">Fotoblog / Visualisierungen</div>
-              <div class="card-text">Visuelle Dokumentation von Feldarbeit und Reisen.</div>
-              <div class="card-link">Bild anklicken</div>
+          <div class="project-card">
+            <h3 style="margin:.4rem 0 .6rem 0;text-align:center;">map_3_reiseroute</h3>
+            <div class="project-embed" aria-hidden="false">
+              <iframe src="https://nageln2025.github.io/Uebung3/maps/map_3_reiseroute.html"
+                      title="map_3_reiseroute"
+                      loading="lazy"
+                      allowfullscreen
+                      sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
+              </iframe>
             </div>
+            <p style="text-align:center;margin:.5rem 0 0;"><a href="https://nageln2025.github.io/Uebung3/maps/map_3_reiseroute.html" target="_blank" rel="noopener">Öffnen</a></p>
           </div>
+
+          <div class="project-card">
+            <h3 style="margin:.4rem 0 .6rem 0;text-align:center;">map_4_flaechen_online</h3>
+            <div class="project-embed" aria-hidden="false">
+              <iframe src="https://nageln2025.github.io/map_4_flaechen_online.html"
+                      title="map_4_flaechen_online"
+                      loading="lazy"
+                      allowfullscreen
+                      sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
+              </iframe>
+            </div>
+            <p style="text-align:center;margin:.5rem 0 0;"><a href="https://nageln2025.github.io/Uebung3/maps/map_4_flaechen_online.html" target="_blank" rel="noopener">Öffnen</a></p>
+          </div>
+
+          <div class="project-card">
+            <h3 style="margin:.4rem 0 .6rem 0;text-align:center;">map_5_3d</h3>
+            <div class="project-embed" aria-hidden="false">
+              <iframe src="https://nageln2025.github.io/Uebung3/maps/map_5_3d.html"
+                      title="map_5_3d"
+                      loading="lazy"
+                      allowfullscreen
+                      sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
+              </iframe>
+            </div>
+            <p style="text-align:center;margin:.5rem 0 0;"><a href="https://nageln2025.github.io/Uebung3/maps/map_5_3d.html" target="_blank" rel="noopener">Öffnen</a></p>
+          </div>
+
         </div>
       </div>
 
